@@ -38,7 +38,7 @@ export default function ShowView(props){
         console.log(el);
         console.log(props);
         if(props.show.show.image!=null)
-            el.style.backgroundImage=`url('${props.show.show.image.original}')`;
+            el.style.backgroundImage=`url('${props.show.show.image.medium}')`;
     }
       
 

@@ -2,7 +2,9 @@ import React, { useEffect,useState } from 'react';
 // import { Button, FormGroup, Label, Input, Form, Container } from 'reactstrap';
 import { Form,Dropdown, Button, Input, FormField } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css'
-import { useForm } from "react-hook-form";
+import { useForm,Controller } from "react-hook-form";
+import Select from "react-select";
+import {useNavigate} from "react-router-dom";
 
 
 
@@ -19,96 +21,56 @@ import { useForm } from "react-hook-form";
   // });
   
   export default function FormPage(props) {
+    const isObjectEmpty = (objectName) => {
+      return Object.keys(objectName).length === 0
+    }
+    const navigate = useNavigate();
     
+
+    // console.log("formc",props.formc)
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [items, setItems] = useState({});
 
     const onSubmit = (data) => {
       console.log(data);
       // save to local storage
-      localStorage.saveData = JSON.stringify(data);
+      localStorage.setItem('Name', JSON.stringify(data.fullName));
+      localStorage.setItem('Email', JSON.stringify(data.email));
+      localStorage.setItem('Time', JSON.stringify(data.time));
+      localStorage.setItem('Trip Interval', JSON.stringify(data.trip_start));
       // setItems(data);
     }
 
-    const options={options: [
-      { key: '0',value:'1', text:'8 a.m.'},
-      { key: '1',value:'2', text:'11 a.m.'},
-      { key: '2',value:'3', text:'2 p.m.'},
-      { key: '3',value:'4', text:'5 p.m.'},
-      { key: '4',value:'5', text:'8.30 p.m.'},
+    useEffect(() => {
+      if(isObjectEmpty(props.formc)){
+        console.log("navigate to home");
+        navigate('/');
+      } 
+    }, []);
 
-    ],
-    selected: '1',
-  };
+    // const handleError=()=>{
+    //   console.log("Everything is fine");
+    // }
+
+  //   const options={options: [
+  //     { key: '0',value:'1', text:'8 a.m.'},
+  //     { key: '1',value:'2', text:'11 a.m.'},
+  //     { key: '2',value:'3', text:'2 p.m.'},
+  //     { key: '3',value:'4', text:'5 p.m.'},
+  //     { key: '4',value:'5', text:'8.30 p.m.'},
+
+  //   ],
+  //   selected: '1',
+  // };
 
   
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem('data'));
-    if (data) {
-     setItems(data);
-    }
-  }, []);
+  
     
    
     return (
-    //   <Container>
-      
-    //   {/* <Formik
-    //    initialValues={{
-    //      fullName: '',
-    //      email: '',
-    //    }}validationSchema={SignupSchema}
-    //    onSubmit={values => {
-    //      // same shape as initial values
-    //      console.log(values);
-    //    }}
-    //  >
-    //      {({ errors, touched }) => ( */}
-    //   <Form>
-    //     <FormGroup>
-       
-    //       <img src={props.formc.show.image.medium} alt="This is"/>
-    //       </FormGroup>
-    //       <FormGroup>
-    //       <Label for="exampleEmail">Movie Name</Label>
-    //       <Input type="text" name="name" id="moviename" value={props.formc.show.name} disabled />
-    //     </FormGroup>
-    //     <FormGroup>
-    //     {/* <Field name="fullName" />
-    //     {errors.firstName && touched.firstName ? (
-    //          <div>{errors.firstName}</div>
-    //        ) : null} */}
-    //      <Label for="examplePassword">Your Name</Label>
-    //       <Input type="text" name="name" id="user_name" placeholder="Your Name" required/>
-    //     </FormGroup>
-    //     <FormGroup>
-    //       <Label for="exampleEmail">Email</Label>
-    //       <Input type="email" name="email" id="exampleEmail" placeholder="example@gmail.com" required/>
-    //     </FormGroup>
-    //     <FormGroup>
-    //       <Label for="exampleSelect">Select Show Timing</Label>
-    //       <Input type="select" name="select" id="exampleSelect">
-      
-    //         <option>8 a.m.</option>
-    //         <option>11 a.m.</option>
-    //         <option>2 p.m.</option>
-    //         <option>5 p.m.</option>
-    //         <option>8.30 p.m.</option>
-    //       </Input>
-    //     </FormGroup>
-    //     <FormGroup>
-    //       <Label for="exampleSelectMulti">Select Date</Label>
-    //       <Input type="date" id="start" name="trip-start"
-    //    value="2023-07-08"
-    //    min="2023-06-07" max="2023-07-07">
-
-    //       </Input>
-    //     </FormGroup>
-    //     <Button color="success">Submit</Button>
-    //   </Form>
-    //   </Container>
-
-
+      isObjectEmpty(props.formc)?
+      <div></div>
+      :
 <div>
 <Form onSubmit={handleSubmit(onSubmit)}>
               <FormField>
@@ -116,7 +78,8 @@ import { useForm } from "react-hook-form";
               </FormField>
                 <Form.Field>
                     <label>Movie Name</label>
-                    <input type="text" value={props.formc.show.name} readOnly={true} />
+                    <input type="text" defaultValue={props.formc.show.name} readOnly={true} />
+                    {/* <p>{props.formc.show.name}</p> */}
                 </Form.Field>
                 <Form.Field>
                     <label>Your Name</label>
@@ -135,22 +98,38 @@ import { useForm } from "react-hook-form";
                 {errors.email && <p>Please check the Email</p>}
                 <Form.Field>
                     <label>Choose Time</label>
-                    <Dropdown
+                    {/* <Dropdown
                       placeholder="Select Options"
                       defaultValue={options.selected}
                       fluid selection
                       options={options.options}
                     />
-      
+       */}
+      <select
+                  className="custom-select"
+                  id="selectmethod"
+                  defaultValue=""
+                  name="time"
+                  {...register("time", { required: true })}
+                >
+                  <option value="" disabled>Select Option</option>
+                  <option  value="8 a.m.">8 a.m.</option>
+                  <option  value="11 a.m.">11 a.m.</option>
+                  <option  value="2 p.m.">2 p.m.</option>
+                  <option  value="5 p.m.">5 p.m.</option>
+                </select>
+                {errors.time && <span className="formError errorMssg">This field is required</span>}
  
                 </Form.Field>
 
-                <Form.Field>
+
+               <Form.Field>
                     <label>Calender</label>
-                    <input type="date" id="start" name="trip-start"
-       value="2023-07-08"
-       min="2023-06-07" max="2023-08-07"/>
-                </Form.Field>
+                    <input type="date" id="start" name="trip_start"
+
+       min="2023-06-07" max="2023-08-07"  {...register("trip_start", { required: true })}/>
+                </Form.Field> 
+                {errors.trip_start && <p>This field is required</p>}
                 <Button type='submit'>Submit</Button>
             </Form>
         </div>
