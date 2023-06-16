@@ -38,7 +38,7 @@ export default function ShowView(props){
         console.log(el);
         console.log(props);
         if(props.show.show.image!=null)
-            el.style.backgroundImage=`url('${props.show.show.image.medium}')`;
+            el.style.backgroundImage=`url('${props.show["show"]["image"]["medium"]}')`;
     }
       
 
@@ -50,12 +50,12 @@ export default function ShowView(props){
         :
         <div className="ShowView" ref={nodeRef}>
             
-            <img src={props.show.show.image.original} alt="show-img"></img>
+            <img src={props.show["show"]["image"]["original"]} alt="show-img"></img>
             
             
             <div id="title-summary" >
                 <h1>{props.show.show.name}</h1>
-                <div id='summary' dangerouslySetInnerHTML={{__html: props.show.show['summary']}} ></div>
+                <div id='summary' dangerouslySetInnerHTML={{__html: props.show["show"]['summary']}} ></div>
                 
                 <Button color="primary" onClick={changePage}>Booking</Button>
             

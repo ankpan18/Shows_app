@@ -20,7 +20,7 @@ useEffect(() => {
         .then(cards => {
           setCards(cards);
           console.log("api called!");
-          // console.log(cards);
+          console.log(cards);
         })
 
 

@@ -74,7 +74,7 @@ import {useNavigate} from "react-router-dom";
 <div>
 <Form onSubmit={handleSubmit(onSubmit)}>
               <FormField>
-              <img src={props.formc.show.image.medium} alt="Movie"/>
+              <img src={props.formc.show.image["medium"]} alt="Movie"/>
               </FormField>
                 <Form.Field>
                     <label>Movie Name</label>

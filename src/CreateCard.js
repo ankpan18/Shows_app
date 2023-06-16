@@ -52,7 +52,7 @@ export default function CreateCard (props) {
           <div className='card1'>
             <img
               alt="Sample"
-              src={props.card.show.image.medium}
+              src={(props.card.show.image!=null)?props.card.show.image.medium:{}}
             />
             <div className='Content'>
               <h5>
