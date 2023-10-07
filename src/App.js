@@ -1,33 +1,19 @@
-import {React,useEffect, useState} from 'react';
+import {React, useState} from 'react';
 import './App.css';
 import AllCards from './components/AllCards'
-import ShowView from './ShowView';
+import ShowView from './components/ShowView';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import FormPage from './components/FormPage';
 
 
 function App() {
   const [show,setShow]=useState({});
-  // useEffect(() => {
-  //   // Update the document title using the browser API
-  //   var card1=document.getElementsByClassName("Card")[0];
-  //   console.log(card1);
-  //   // if(card1!==undefined)
-  //   //   card1.click(); 
-  // });
 
   function childtoparent(data){
     console.log("childtoparent",data);
     setShow(data);
-    // setFormc(data);
+    
   }
-
-  // function formparent(data){
-  //   console.log("form",data);
-  //   setFormc(data);
-  //   // setFormc(data);
-  // }
-
 
   
   return (
@@ -38,8 +24,6 @@ function App() {
       <Route path="form" element={<FormPage formc={show}/>}/>
       </Routes>
     </BrowserRouter>
-      {/* <ShowView show={show}/>
-      <AllCards childtoparent={childtoparent}/> */}
     </div>
   );
 }

@@ -1,5 +1,5 @@
-import {React,useRef,useEffect} from 'react';
-import {Button,Col,Row,Container} from 'reactstrap';
+import {React,useRef} from 'react';
+import {Button} from 'reactstrap';
 import {useNavigate} from "react-router-dom";
 // import Form from "./Form";
 
@@ -15,33 +15,6 @@ export default function ShowView(props){
         return Object.keys(objectName).length === 0
       }
 
-    //   useEffect(() => {
-    //     // Update the document title using the browser API
-    //     if(!isObjectEmpty(props.show))
-    //     {
-
-        
-        
-    //     var el=nodeRef.current;
-    //     console.log(el);
-    //     // // console.log(props.card.show.image);
-    //     if(props.card.show.image!=null)
-    //       el.style.backgroundImage=`url('${props.card.show.image.medium}')`;
-        
-    //     // if(props.card.show.image!=null)
-    //     //   card.style.backgroundImage=`url('${props.card.show.image.medium}')`;
-    //     }
-        
-    //   },[props]);
-    function setimage(){
-        var el=nodeRef.current;
-        console.log(el);
-        console.log(props);
-        if(props.show.show.image!=null)
-            el.style.backgroundImage=`url('${props.show["show"]["image"]["medium"]}')`;
-    }
-      
-
 //   console.log(props.show)
     
     return (
@@ -49,6 +22,7 @@ export default function ShowView(props){
         <div className="ShowView" ref={nodeRef}></div>
         :
         <div className="ShowView" ref={nodeRef}>
+            
             
             <img src={props.show["show"]["image"]["original"]} alt="show-img"></img>
             
@@ -60,9 +34,6 @@ export default function ShowView(props){
                 <Button color="primary" onClick={changePage}>Booking</Button>
             
             </div>
-            
-            {/* {setimage()} */}
-            
         </div>
 
     )

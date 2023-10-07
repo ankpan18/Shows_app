@@ -23,7 +23,7 @@ body{height: 100%;}
   height: fit-content;
   width: fit-content;
   box-shadow: black 2px 2px 20px -4px;
-  filter: grayscale(0.5);
+  /* filter: grayscale(0.5); */
   
 }
 .card1:hover{
@@ -31,7 +31,7 @@ body{height: 100%;}
   transform: scale(1.05);
   transition: 200ms ease ;
   box-shadow: black 2px 6px 39px -10px;
-  filter: grayscale(0);
+  /* filter: grayscale(0); */
 
 }
 .card1>img{
@@ -56,4 +56,9 @@ body{height: 100%;}
 #summary{
   margin-top: 30px;  
   overflow: hidden scroll;
+}
+
+
+.bookingform{
+  padding:2em 30em;
 }

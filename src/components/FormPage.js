@@ -1,24 +1,10 @@
-import React, { useEffect,useState } from 'react';
-// import { Button, FormGroup, Label, Input, Form, Container } from 'reactstrap';
-import { Form,Dropdown, Button, Input, FormField } from 'semantic-ui-react';
+import React, { useEffect, useState } from 'react';
+import { Form, Button, FormField,Message } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css'
-import { useForm,Controller } from "react-hook-form";
-import Select from "react-select";
+import { useForm } from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 
 
-
-
-// import { Formik, Form, Field } from 'formik';
-// import * as Yup from 'yup';
-
-// const SignupSchema = Yup.object().shape({
-  //   fullName: Yup.string()
-  //     .min(2, 'Too Short!')
-  //     .max(50, 'Too Long!')
-  //     .required('Required'),
-  //   email: Yup.string().email('Invalid email').required('Required'),
-  // });
   
   export default function FormPage(props) {
     const isObjectEmpty = (objectName) => {
@@ -26,10 +12,19 @@ import {useNavigate} from "react-router-dom";
     }
     const navigate = useNavigate();
     
+    var currD=new Date();
+    var nextD=new Date();
+    nextD.setDate(nextD.getDate()+7);
+
+    function getDateString(d){
+      // return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDay();
+      return d.toISOString().slice(0,10);
+    }
 
     // console.log("formc",props.formc)
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [items, setItems] = useState({});
+    // const [items, setItems] = useState({});
+    const [status,setStatus]=useState(false);
 
     const onSubmit = (data) => {
       console.log(data);
@@ -38,6 +33,7 @@ import {useNavigate} from "react-router-dom";
       localStorage.setItem('Email', JSON.stringify(data.email));
       localStorage.setItem('Time', JSON.stringify(data.time));
       localStorage.setItem('Trip Interval', JSON.stringify(data.trip_start));
+      setStatus(true);
       // setItems(data);
     }
 
@@ -47,22 +43,6 @@ import {useNavigate} from "react-router-dom";
         navigate('/');
       } 
     }, []);
-
-    // const handleError=()=>{
-    //   console.log("Everything is fine");
-    // }
-
-  //   const options={options: [
-  //     { key: '0',value:'1', text:'8 a.m.'},
-  //     { key: '1',value:'2', text:'11 a.m.'},
-  //     { key: '2',value:'3', text:'2 p.m.'},
-  //     { key: '3',value:'4', text:'5 p.m.'},
-  //     { key: '4',value:'5', text:'8.30 p.m.'},
-
-  //   ],
-  //   selected: '1',
-  // };
-
   
   
     
@@ -72,8 +52,16 @@ import {useNavigate} from "react-router-dom";
       <div></div>
       :
 <div>
-<Form onSubmit={handleSubmit(onSubmit)}>
+  {status?(<Message
+    success
+    header='Your booking was successful'
+    content='You may now go back or close this page'
+  />):(" ")}
+
+<Form className='bookingform' onSubmit={handleSubmit(onSubmit)}>
               <FormField>
+                
+             
               <img src={props.formc.show.image["medium"]} alt="Movie"/>
               </FormField>
                 <Form.Field>
@@ -92,19 +80,12 @@ import {useNavigate} from "react-router-dom";
                     <input placeholder='Email' type="email" {...register("email",
                             {
                                 required: true,
-                                pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                                pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                             })}/>
                 </Form.Field>
                 {errors.email && <p>Please check the Email</p>}
                 <Form.Field>
                     <label>Choose Time</label>
-                    {/* <Dropdown
-                      placeholder="Select Options"
-                      defaultValue={options.selected}
-                      fluid selection
-                      options={options.options}
-                    />
-       */}
       <select
                   className="custom-select"
                   id="selectmethod"
@@ -124,10 +105,12 @@ import {useNavigate} from "react-router-dom";
 
 
                <Form.Field>
-                    <label>Calender</label>
+                    <label>Calendar</label>
                     <input type="date" id="start" name="trip_start"
 
-       min="2023-06-07" max="2023-08-07"  {...register("trip_start", { required: true })}/>
+      //  min="2023-08-07" max="2023-08-10"  {...register("trip_start", { required: true })}/>
+      min={getDateString(currD)} max={getDateString(nextD)}  {...register("trip_start", { required: true })}/>
+
                 </Form.Field> 
                 {errors.trip_start && <p>This field is required</p>}
                 <Button type='submit'>Submit</Button>
