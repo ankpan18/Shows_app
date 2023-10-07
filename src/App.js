@@ -1,10 +1,9 @@
 import {React,useEffect, useState} from 'react';
-import logo from './logo.svg';
 import './App.css';
-import AllCards from './AllCards'
+import AllCards from './components/AllCards'
 import ShowView from './ShowView';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import FormPage from './FormPage';
+import FormPage from './components/FormPage';
 
 
 function App() {

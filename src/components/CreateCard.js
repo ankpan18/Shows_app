@@ -1,4 +1,5 @@
 import {React,useRef,useEffect} from 'react';
+import Sample from '../assets/SampleImage.png';
 // import {Card,CardBody,CardTitle,CardSubtitle,CardText,Button} from 'reactstrap';
 export default function CreateCard (props) {
   const nodeRef = useRef();
@@ -52,7 +53,7 @@ export default function CreateCard (props) {
           <div className='card1'>
             <img
               alt="Sample"
-              src={(props.card.show.image!=null)?props.card.show.image.medium:{}}
+              src={(props.card.show.image!=null)?props.card.show.image.medium:Sample}
             />
             <div className='Content'>
               <h5>
